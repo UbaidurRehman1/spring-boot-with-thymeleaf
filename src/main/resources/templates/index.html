@@ -32,6 +32,12 @@
                 <button type="submit" class="btn btn-primary" value="Sign In">Submit</button>
             </div>
         </div>
+        <div class="row justify-content-md-center">
+            <div class="col-4" style="padding-left: 3rem">
+                <div class="alert alert-danger" role="alert" th:if="${param.error}">Invalid username and password</div>
+            </div>
+        </div>
+
     </form>
 </div>
 
