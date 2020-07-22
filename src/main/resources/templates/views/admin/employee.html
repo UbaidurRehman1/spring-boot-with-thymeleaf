@@ -1,0 +1,174 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="EN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:replace="/fragments/header :: header"><title></title></head>
+<body>
+
+<nav lang="en" th:replace="fragments/navbar :: navbar"></nav>
+
+<div class="container-fluid app">
+    <div class="row" style="margin-top: 2rem">
+        <div class="col-3">
+            <h3><span th:text="${operation}"></span> Employee</h3>
+        </div>
+    </div>
+    <!--    Form for CRUD Operation on Employee     -->
+    <form style="margin-top: 20px" th:object="${employee}" method="post" action="/admin/employee/save">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="name" class="col-sm-3 col-form-label">Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="name" th:field="${employee.name}" required>
+                        <input type="hidden" th:field="${employee.id}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="title" class="col-sm-3 col-form-label">Title</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="title" th:field="${employee.title}" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="login" class="col-sm-3 col-form-label">Login</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="login" th:field="${employee.login}" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="password" class="col-sm-3 col-form-label">Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="password" th:value="${employee.password}"
+                               th:field="${employee.password}" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="level" class="col-sm-3 col-form-label">User Level</label>
+                    <div class="col-sm-9">
+                        <select id="level" th:field="${employee.level}">
+                            <option th:each="level : ${roles}" th:value="${level.getRole()}"
+                                    th:text="${level.getRole().name()}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="department" class="col-sm-3 col-form-label">Department</label>
+                    <div class="col-sm-9">
+                        <select id="department" th:field="${employee.department.id}">
+                            <option th:each="department: ${departments}" th:value="${department.id}"
+                                    th:text="${department.name}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="address" class="col-sm-3 col-form-label">Address</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="address" th:field="${employee.address}" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="email" class="col-sm-3 col-form-label">Email</label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" id="email" th:field="${employee.email}" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="workPhone" class="col-sm-3 col-form-label">Work Phone</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="workPhone" th:field="${employee.workPhone}"
+                               required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="homePhone" class="col-sm-3 col-form-label">Home Phone</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="homePhone" th:field="${employee.homePhone}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="cellPhone" class="col-sm-3 col-form-label">Cell Phone</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="cellPhone" th:field="${employee.cellPhone}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="manOfMonth" class="col-sm-3 col-form-label">Man of the Month</label>
+                    <div class="col-sm-9">
+                        <input type="checkbox" class="form-control" id="manOfMonth"
+                               th:field="${employee.isManOfMonth}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="picture" class="col-sm-3 col-form-label">Picture</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="picture" th:field="${employee.picture}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-1">
+                    <button type="submit" class="btn btn-secondary" th:text="${operation}"></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--    Buttons for Delete and Update-->
+    <div class="row" style="margin-bottom: 2rem">
+        <div class="col-3 btn-group">
+            <a class="btn btn-danger" th:if="${isUpdate}" th:href="@{|/admin/delete/${employee.id}|}">Delete</a>
+            <a class="btn btn-warning" th:href="@{/admin/members}">Cancel</a>
+        </div>
+    </div>
+</div>
+<div lang="en" th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

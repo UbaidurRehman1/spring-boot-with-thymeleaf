@@ -1,0 +1,48 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="EN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:replace="/fragments/header :: header"><title></title></head>
+<body>
+
+<nav lang="en" th:replace="fragments/navbar :: navbar"></nav>
+
+<div class="container-fluid app">
+
+    <div class="row" style="margin-top: 2rem">
+        <div class="col-3">
+            <h3>Departments</h3>
+        </div>
+    </div>
+
+    <!--    Form for CRUD Operations on Department  -->
+    <form style="margin-top: 20px" th:object="${department}" method="post" action="/department">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group row">
+                    <label for="name" class="col-sm-3 col-form-label">Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="name" th:field="${department.name}">
+                        <input type="hidden" th:field="${department.id}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-1">
+                    <button type="submit" class="btn btn-secondary" th:text="${operation}"></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-2 btn-group">
+            <a class="btn btn-danger" th:href="@{|/department/delete/${department.id}|}" th:if="${isUpdate}">Delete</a>
+            <a class="btn btn-warning" th:href="@{/admin/department}">Cancel</a>
+        </div>
+    </div>
+
+</div>
+<div lang="en" th:replace="fragments/footer :: footer"></div>
+</body>
+
+</html>

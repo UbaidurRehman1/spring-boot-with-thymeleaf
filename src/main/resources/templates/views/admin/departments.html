@@ -1,0 +1,32 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="EN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:replace="fragments/header :: header"><title></title></head>
+<body>
+<nav lang="en" th:replace="fragments/navbar :: navbar"></nav>
+<div class="container-fluid app">
+    <!--    List of Departments     -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card" style="width: 18rem; margin-top: 2rem">
+                <h3 class="card-title" style="text-align: center">Departments</h3>
+                <div class="card-header">
+                    <h4>Names</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" th:each="department: ${departments}">
+                        <a th:text="${department.name}" th:href="@{|/department/${department.id}|}"></a>
+                    </li>
+                </ul>
+                <a class="btn btn-secondary" th:href="@{/department/create}">Insert</a>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 2rem">
+        <div class="col-2">
+            <a class="btn btn-dark" href="/admin">Back</a>
+        </div>
+    </div>
+</div>
+<div lang="en" th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

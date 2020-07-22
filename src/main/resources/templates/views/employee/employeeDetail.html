@@ -1,0 +1,63 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="EN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:replace="fragments/header :: header"><title></title></head>
+<body>
+<nav lang="en" th:replace="fragments/navbar :: navbar"></nav>
+<div class="container-fluid app">
+    <div class="row" style="margin-top: 2rem">
+        <div class="col-6">
+            <table class="table table-dark">
+                <tbody>
+                <tr>
+                    <th>Emp#</th>
+                    <td th:text="${employee.id}"></td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td th:text="${employee.name}"></td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td th:text="${employee.title}"></td>
+                </tr>
+                <tr>
+                    <th>Department</th>
+                    <td th:text="${employee.department}"></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td th:text="${employee.email}"></td>
+                </tr>
+                <tr>
+                    <th>Work Phone</th>
+                    <td th:text="${employee.workPhone}"></td>
+                </tr>
+                <tr>
+                    <th>Cell Phone</th>
+                    <td th:text="${employee.cellPhone}"></td>
+                </tr>
+                <tr>
+                    <th>Home Phone</th>
+                    <td th:text="${employee.homePhone}"></td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td th:text="${employee.address}"></td>
+                </tr>
+                <tr>
+                    <th>Picture</th>
+                    <td><img th:src="${employee.picture}" th:alt="${employee.name}" alt="" src=""></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <a class="btn btn-dark" href="/employees">Back</a>
+        </div>
+    </div>
+</div>
+<div lang="en" th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

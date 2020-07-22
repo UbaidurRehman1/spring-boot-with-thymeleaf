@@ -1,0 +1,20 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="EN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:replace="fragments/header :: header"><title></title></head>
+<body>
+<nav lang="en" th:replace="fragments/navbar :: navbar"></nav>
+<div class="container-fluid app">
+    <!--    Menu    -->
+    <div class="card" style="width: 18rem; margin-top: 2rem">
+        <div class="card-header">
+            Administration Menu
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="/admin/members">Members</a></li>
+            <li class="list-group-item"><a href="/admin/department">Departments</a></li>
+        </ul>
+    </div>
+</div>
+<div lang="en" th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

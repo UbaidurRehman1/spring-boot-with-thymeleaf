@@ -1,0 +1,85 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="EN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:replace="fragments/header :: header"><title></title></head>
+<body>
+<nav lang="en" th:replace="fragments/navbar :: navbar"></nav>
+<div class="container-fluid app">
+    <div class="row">
+        <!--    Man of the Month   -->
+        <div class="col-4">
+            <div class="card" style="width: 18rem; margin-top: 2rem">
+                <h5 class="card-title" style="text-align: center">Man of the Month</h5>
+                <img class="card-img-top" th:src="${employeeOfMonth.getPicture()}" th:alt="${employeeOfMonth.getName()}"
+                     alt="" src="">
+                <div class="card-body">
+                    <p class="card-text" th:text="${employeeOfMonth.getName()}"></p>
+                </div>
+            </div>
+        </div>
+        <!--        Search Section      -->
+        <div class="col-8">
+            <div class="card" style="width: 22rem; margin-top: 2rem">
+                <div class="card-body">
+                    <h5 class="card-title">Search</h5>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th><label for="department">Department</label></th>
+                            <td>
+                                <select id="department">
+                                    <option value="ALL">All</option>
+                                    <option th:each="department : ${departments}" th:value="${department.getName()}"
+                                            th:text="${department.getName()}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="name">Name</label></th>
+                            <td>
+                                <input type="text" id="name" placeholder="Name of Employee">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="email">Email</label></th>
+                            <td>
+                                <input type="text" id="email" placeholder="Email of Employee">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary" onclick="searchByEmployees()">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    All Employees   -->
+    <div class="row">
+        <div class="col-9">
+            <table class="table table-dark" id="table1">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Work Phone</th>
+                    <th scope="col">Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="employee : ${employeesList}">
+                    <th scope="row" th:text="${employee.id}"></th>
+                    <td><a th:text="${employee.name}" th:href="@{|/employees/${employee.id}|}"></a></td>
+                    <td th:text="${employee.title}"></td>
+                    <td th:text="${employee.department.name}"></td>
+                    <td th:text="${employee.workPhone}"></td>
+                    <td th:text="${employee.email}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div lang="en" th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

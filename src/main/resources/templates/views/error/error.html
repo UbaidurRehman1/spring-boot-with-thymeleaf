@@ -1,0 +1,23 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="EN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:replace="fragments/header :: header"><title></title></head>
+<body>
+<nav lang="en" th:replace="fragments/navbar :: navbar"></nav>
+<div class="container-fluid app">
+    <div class="row" style="margin-top: 2rem">
+        <div class="col-12">
+            <div class="card mx-auto" style="width: 18rem;">
+                <img class="card-img-top" src="https://pbs.twimg.com/profile_images/1139292658936008705/93Dd2u1S_400x400.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Oh Noh, Error!</h5>
+                    <p class="card-text" th:text="${exception.message}"></p>
+                    <p class="card-text" th:text="${exception.cause}"></p>
+                    <a href="/employees" class="btn btn-primary">Go Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div lang="en" th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

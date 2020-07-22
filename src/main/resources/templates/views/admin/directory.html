@@ -1,0 +1,79 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="EN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:replace="fragments/header :: header"><title></title></head>
+<body>
+<nav lang="en" th:replace="fragments/navbar :: navbar"></nav>
+<div class="container-fluid app">
+    <!--    Search Section      -->
+    <div class="col-8">
+        <div class="card" style="width: 26rem;">
+            <div class="card-body">
+                <h5 class="card-title">Search</h5>
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th><label for="login">Login</label></th>
+                        <td>
+                            <input id="login" placeholder="Login of Employee">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="name">Name</label></th>
+                        <td>
+                            <input id="name" placeholder="Name of Employee">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="manOfMonth">Man of the Month</label></th>
+                        <td>
+                            <select id="manOfMonth">
+                                <option value="All">All</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" onclick="searchByAdmin()">Search</button>
+            </div>
+        </div>
+    </div>
+    <!--    List of All Employees for Admin     -->
+    <div class="row" style="margin-top: 2rem">
+        <div class="col-9">
+            <table class="table table-dark" id="table2">
+                <thead>
+                <tr>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Login</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Level</th>
+                    <th scope="col">Man of the month</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="employee : ${employeeList}">
+                    <th scope="row"><a th:href="@{|/admin/members/${employee.id}|}">Edit</a></th>
+                    <td th:text="${employee.login}"></td>
+                    <td th:text="${employee.name}"></td>
+                    <td th:text="${employee.level}"></td>
+                    <td><span th:if="${employee.isManOfMonth}">Yes</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <a class="btn btn-secondary" href="/admin/employee/create">Add New Employee</a>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 2rem">
+        <div class="col-2">
+            <a class="btn btn-primary" href="/admin">Back</a>
+        </div>
+    </div>
+</div>
+<div lang="en" th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
