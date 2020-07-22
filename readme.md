@@ -20,3 +20,4 @@
 - git clone https://github.com/UbaidurRehman1/spring-boot-with-thymeleaf
 - cd spring-boot-with-thymeleaf
 - mvn spring-boot:run
+- now navigate to http://localhost:8080
