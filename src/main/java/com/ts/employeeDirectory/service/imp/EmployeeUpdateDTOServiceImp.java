@@ -4,9 +4,11 @@ import com.ts.employeeDirectory.dto.EmployeeUpdateDtO;
 import com.ts.employeeDirectory.entity.Department;
 import com.ts.employeeDirectory.entity.Employee;
 import com.ts.employeeDirectory.entity.Role;
+import com.ts.employeeDirectory.exception.ManOfMonthNotFoundException;
 import com.ts.employeeDirectory.exception.UserNotFoundException;
 import com.ts.employeeDirectory.repo.EmployeeRepo;
 import com.ts.employeeDirectory.service.DepartmentService;
+import com.ts.employeeDirectory.service.EmployeeDetailDTOService;
 import com.ts.employeeDirectory.service.EmployeeUpdateDTOService;
 import com.ts.employeeDirectory.service.RoleService;
 import org.slf4j.Logger;
@@ -54,6 +56,7 @@ public class EmployeeUpdateDTOServiceImp implements EmployeeUpdateDTOService {
             } else {
                 LOGGER.info("Creating New Employee: {}", employeeUpdateDtO);
             }
+            setCurrentManOfMonthFalse();
             Employee employee = new Employee();
             employee = employee.createEmployee(employeeUpdateDtO);
             Department department = departmentService.get(employeeUpdateDtO.getDepartment().getId());
@@ -72,4 +75,13 @@ public class EmployeeUpdateDTOServiceImp implements EmployeeUpdateDTOService {
         }
     }
 
+    private void setCurrentManOfMonthFalse() {
+        try {
+            Employee employee = employeeRepo.findByManOfMonthTrue().orElseThrow(() -> {throw new ManOfMonthNotFoundException("Man of Month Not found");});
+            employee.setManOfMonth(false);
+            employeeRepo.save(employee);
+        } catch(ManOfMonthNotFoundException ignore) {
+
+        }
+    }
 }
