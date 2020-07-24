@@ -7,9 +7,12 @@ import com.ts.employeeDirectory.exception.ForeignKeyConstraintException;
 import com.ts.employeeDirectory.repo.DepartmentRepo;
 import com.ts.employeeDirectory.service.DepartmentService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,8 +73,22 @@ public class DepartmentServiceImp implements DepartmentService {
         try {
             departmentRepo.delete(department);
             log.info("Deleted");
+        } catch (DataIntegrityViolationException exp) {
+            SQLException sqlException = getSQLException(exp);
+            if (isForeignKeyConstraintViolation(sqlException)) {
+                throw new ForeignKeyConstraintException(department.getName() + " contains its members. First delete them and then delete this department");
+            }
         } catch (Exception exp) {
-            throw new ForeignKeyConstraintException(department.getName() + " contains its members. First delete them and then delete this department");
+            throw new RuntimeException("Unknown Exception");
         }
+    }
+
+    private SQLException getSQLException(DataIntegrityViolationException exp) {
+        ConstraintViolationException constraintViolationException = (ConstraintViolationException) exp.getCause();
+        return constraintViolationException.getSQLException();
+    }
+
+    public static boolean isForeignKeyConstraintViolation(SQLException e) {
+        return e.getSQLState().startsWith("23") && e.getErrorCode() == 1451;
     }
 }
