@@ -8,10 +8,10 @@
 		<version>2.3.1.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.ts</groupId>
-	<artifactId>employeeDirectory</artifactId>
+	<groupId>com.techno-soft</groupId>
+	<artifactId>employee_directory</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>employeeDirectory</name>
+	<name>employee_directory</name>
 	<description>Simple CRUD Application on the Employees </description>
 
 	<properties>
