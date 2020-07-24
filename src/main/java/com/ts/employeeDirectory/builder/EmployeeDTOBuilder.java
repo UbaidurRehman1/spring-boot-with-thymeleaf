@@ -2,7 +2,7 @@ package com.ts.employeeDirectory.builder;
 
 import com.ts.employeeDirectory.dto.DepartmentDTO;
 import com.ts.employeeDirectory.dto.EmployeeDTO;
-import com.ts.employeeDirectory.entity.EmployeeRole;
+import com.ts.employeeDirectory.enumeration.EmployeeRole;
 
 /**
  * Builder class for EmployeeDTO

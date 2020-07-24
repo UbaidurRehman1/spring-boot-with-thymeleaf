@@ -1,6 +1,6 @@
 package com.ts.employeeDirectory.service.imp;
 
-import com.ts.employeeDirectory.entity.EmployeeRole;
+import com.ts.employeeDirectory.enumeration.EmployeeRole;
 import com.ts.employeeDirectory.entity.Role;
 import com.ts.employeeDirectory.exception.RoleNotFoundException;
 import com.ts.employeeDirectory.repo.RoleRepo;

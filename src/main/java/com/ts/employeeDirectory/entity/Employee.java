@@ -6,6 +6,7 @@ import com.ts.employeeDirectory.dto.DepartmentDTO;
 import com.ts.employeeDirectory.dto.EmployeeDTO;
 import com.ts.employeeDirectory.dto.EmployeeDetailDTO;
 import com.ts.employeeDirectory.dto.EmployeeUpdateDtO;
+import com.ts.employeeDirectory.enumeration.EmployeeRole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

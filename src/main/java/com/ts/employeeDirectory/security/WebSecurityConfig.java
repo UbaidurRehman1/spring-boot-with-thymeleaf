@@ -1,6 +1,6 @@
 package com.ts.employeeDirectory.security;
 
-import com.ts.employeeDirectory.entity.EmployeeRole;
+import com.ts.employeeDirectory.enumeration.EmployeeRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
