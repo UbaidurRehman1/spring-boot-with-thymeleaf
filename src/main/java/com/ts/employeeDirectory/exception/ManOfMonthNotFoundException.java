@@ -5,7 +5,7 @@ package com.ts.employeeDirectory.exception;
  *
  * @author ubaid
  */
-public class ManOfMonthNotFoundException extends EmployeeDirectoryException {
+public class ManOfMonthNotFoundException extends AppRuntimeException {
     public ManOfMonthNotFoundException(String message) {
         super(message);
     }

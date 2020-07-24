@@ -5,7 +5,7 @@ package com.ts.employeeDirectory.exception;
  *
  * @author ubaid
  */
-public class DepartmentNotFoundException extends EmployeeDirectoryException {
+public class DepartmentNotFoundException extends AppRuntimeException {
     public DepartmentNotFoundException(String message) {
         super(message);
     }

@@ -5,7 +5,7 @@ package com.ts.employeeDirectory.exception;
  *
  * @author ubaid
  */
-public class RoleNotFoundException extends EmployeeDirectoryException {
+public class RoleNotFoundException extends AppRuntimeException {
     public RoleNotFoundException(String message) {
         super(message);
     }
