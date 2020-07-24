@@ -91,7 +91,7 @@ public class EmployeeDetailDTOServiceImp implements EmployeeDetailDTOService {
         Department department = departmentService.get(employeeUpdateDtO.getDepartment().getId());
         Role role = roleService.findByRole(employeeUpdateDtO.getLevel());
         employee.setDepartment(department);
-        employee.addRole(role);
+        employee.setRole(role);
         employee.setPassword(passwordEncoder.encode(employeeUpdateDtO.getPassword()));
         return employee;
     }

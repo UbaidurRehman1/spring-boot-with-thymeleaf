@@ -2,13 +2,10 @@ package com.ts.employeeDirectory.entity;
 
 import com.ts.employeeDirectory.dto.EmployeeDTO;
 import com.ts.employeeDirectory.dto.EmployeeDetailDTO;
-import com.ts.employeeDirectory.enumeration.EmployeeRole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Representing Employee Table
@@ -34,8 +31,8 @@ public class Employee {
 
     private String password;
 
-    @ManyToMany
-    private Set<Role> roles = new HashSet<>();
+    @OneToOne
+    private Role role;
 
     @OneToOne
     private Department department;
@@ -54,13 +51,7 @@ public class Employee {
 
     private String picture;
 
-    public void addRole(Role role) {
-        roles.add(role);
-    }
-
     public EmployeeDTO getEmployeeDTO() {
-        Set<Role> levels = getRoles();
-        EmployeeRole level = levels.stream().reduce(((role, role2) -> role.getRole().ordinal() > role2.getRole().ordinal() ? role : role2)).orElseThrow().getRole();
         return EmployeeDTO.builder()
                 .id(id)
                 .login(login)
@@ -70,14 +61,12 @@ public class Employee {
                 .workPhone(phoneNumber)
                 .email(email)
                 .isManOfMonth(manOfMonth)
-                .level(level)
+                .level(role.getRole())
                 .build();
     }
 
 
     public EmployeeDetailDTO getEmployeeDetailDTO() {
-        Set<Role> levels = getRoles();
-        EmployeeRole level = levels.stream().reduce(((role, role2) -> role.getRole().ordinal() > role2.getRole().ordinal() ? role : role2)).orElseThrow().getRole();
         return EmployeeDetailDTO.builder()
                 .address(address)
                 .cellPhone(cellPhone)
@@ -92,7 +81,7 @@ public class Employee {
                 .workPhone(phoneNumber)
                 .email(email)
                 .isManOfMonth(manOfMonth)
-                .level(level)
+                .level(role.getRole())
                 .build();
     }
 

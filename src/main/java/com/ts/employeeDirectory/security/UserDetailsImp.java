@@ -9,10 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -34,7 +31,7 @@ public class UserDetailsImp implements UserDetails {
     }
 
     public static UserDetailsImp build(Employee user) {
-        Set<Role> roles = user.getRoles();
+        Set<Role> roles = new HashSet<>(Collections.singletonList(user.getRole()));
         List<GrantedAuthority> authorities = roles.stream().map(role -> new SimpleGrantedAuthority(role.getRole().name())).collect(Collectors.toList());
         UserDetailsImp userDetailsImp = new UserDetailsImp();
         userDetailsImp.setId(user.getId());
