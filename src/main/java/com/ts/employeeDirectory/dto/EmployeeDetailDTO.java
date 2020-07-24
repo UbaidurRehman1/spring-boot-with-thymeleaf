@@ -1,9 +1,7 @@
 package com.ts.employeeDirectory.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.ts.employeeDirectory.enumeration.EmployeeRole;
+import lombok.*;
 
 /**
  * DTO Representation of Employee Detail (extending from Employee DTO)
@@ -20,14 +18,22 @@ public class EmployeeDetailDTO extends EmployeeDTO {
     private String homePhone;
     private String cellPhone;
     private String picture;
+    private String password;
 
-    public EmployeeDetailDTO(EmployeeDTO employeeDTO, EmployeeDetailDTO employeeDetailDTO) {
-        super(employeeDTO);
-        setLevel(employeeDetailDTO.getLevel());
-        setAddress(employeeDetailDTO.getAddress());
-        setHomePhone(employeeDetailDTO.getHomePhone());
-        setCellPhone(employeeDetailDTO.getCellPhone());
-        setPicture(employeeDetailDTO.getPicture());
+    @Builder
+    public EmployeeDetailDTO(Long id, String login, String name, String title, DepartmentDTO department, String workPhone, String email, EmployeeRole level, Boolean isManOfMonth, String address, String homePhone, String cellPhone, String picture, String password) {
+        super(id, login, name, title, department, workPhone, email, level, isManOfMonth);
+        this.address = address;
+        this.homePhone = homePhone;
+        this.cellPhone = cellPhone;
+        this.picture = picture;
+        this.password = password;
+    }
+
+    public static class EmployeeDetailDTOBuilder extends EmployeeDTOBuilder {
+        EmployeeDetailDTOBuilder() {
+            super();
+        }
     }
 
 }

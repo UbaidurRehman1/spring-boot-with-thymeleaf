@@ -1,11 +1,7 @@
 package com.ts.employeeDirectory.entity;
 
-import com.ts.employeeDirectory.builder.EmployeeDTOBuilder;
-import com.ts.employeeDirectory.builder.EmployeeDetailDTOBuilder;
-import com.ts.employeeDirectory.dto.DepartmentDTO;
 import com.ts.employeeDirectory.dto.EmployeeDTO;
 import com.ts.employeeDirectory.dto.EmployeeDetailDTO;
-import com.ts.employeeDirectory.dto.EmployeeUpdateDtO;
 import com.ts.employeeDirectory.enumeration.EmployeeRole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -63,39 +59,44 @@ public class Employee {
     }
 
     public EmployeeDTO getEmployeeDTO() {
-        Department department = getDepartment();
-        DepartmentDTO departmentDto = department.getDepartment();
-        EmployeeDTO employeeDTO = new EmployeeDTOBuilder()
-                .setId(getId())
-                .setLogin(getLogin())
-                .setName(getName())
-                .setTitle(getTitle())
-                .setDepartment(departmentDto)
-                .setWorkPhone(getPhoneNumber())
-                .setEmail(getEmail())
-                .setIsManOfMonth(getManOfMonth())
-                .createEmployeeDTO();
         Set<Role> levels = getRoles();
         EmployeeRole level = levels.stream().reduce(((role, role2) -> role.getRole().ordinal() > role2.getRole().ordinal() ? role : role2)).orElseThrow().getRole();
-        employeeDTO.setLevel(level);
-        return employeeDTO;
+        return EmployeeDTO.builder()
+                .id(id)
+                .login(login)
+                .name(name)
+                .title(title)
+                .department(department.getDepartment())
+                .workPhone(phoneNumber)
+                .email(email)
+                .isManOfMonth(manOfMonth)
+                .level(level)
+                .build();
     }
+
 
     public EmployeeDetailDTO getEmployeeDetailDTO() {
-        return new EmployeeDetailDTOBuilder()
-                .setEmployeeDTO(getEmployeeDTO())
-                .setAddress(getAddress())
-                .setHomePhone(getHomePhone())
-                .setCellPhone(getCellPhone())
-                .setPicture(getPicture())
-                .createEmployeeDetailDTO();
+        Set<Role> levels = getRoles();
+        EmployeeRole level = levels.stream().reduce(((role, role2) -> role.getRole().ordinal() > role2.getRole().ordinal() ? role : role2)).orElseThrow().getRole();
+        return EmployeeDetailDTO.builder()
+                .address(address)
+                .cellPhone(cellPhone)
+                .homePhone(homePhone)
+                .picture(picture)
+                .password(password)
+                .id(id)
+                .login(login)
+                .name(name)
+                .title(title)
+                .department(department.getDepartment())
+                .workPhone(phoneNumber)
+                .email(email)
+                .isManOfMonth(manOfMonth)
+                .level(level)
+                .build();
     }
 
-    public EmployeeUpdateDtO getEmployeeUpdateDTO() {
-        return new EmployeeUpdateDtO(getEmployeeDTO(), getEmployeeDetailDTO(), getPassword());
-    }
-
-    public Employee createEmployee(EmployeeUpdateDtO employeeUpdateDtO) {
+    public Employee createEmployee(EmployeeDetailDTO employeeUpdateDtO) {
         setId(employeeUpdateDtO.getId());
         setName(employeeUpdateDtO.getName());
         setTitle(employeeUpdateDtO.getTitle());

@@ -19,4 +19,11 @@ public interface EmployeeDetailDTOService {
      * @return employee
      */
     EmployeeDetailDTO get(Long id);
+
+
+    /**
+     * @param employeeDetailDTO employee (all detail of employee)
+     */
+    void save(EmployeeDetailDTO employeeDetailDTO);
+
 }

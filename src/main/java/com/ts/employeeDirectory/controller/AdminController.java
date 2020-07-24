@@ -2,7 +2,7 @@ package com.ts.employeeDirectory.controller;
 
 import com.ts.employeeDirectory.dto.DepartmentDTO;
 import com.ts.employeeDirectory.dto.EmployeeDTO;
-import com.ts.employeeDirectory.dto.EmployeeUpdateDtO;
+import com.ts.employeeDirectory.dto.EmployeeDetailDTO;
 import com.ts.employeeDirectory.entity.Role;
 import com.ts.employeeDirectory.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,19 +49,19 @@ public class AdminController {
     private final DepartmentService departmentService;
     private final EmployeeService employeeService;
     private final EmployeeDTOService employeeDTOService;
-    private final EmployeeUpdateDTOService employeeUpdateDTOService;
+    private final EmployeeDetailDTOService employeeDetailDTOService;
     private final RoleService roleService;
 
     @Autowired
     public AdminController(DepartmentService departmentService,
                            EmployeeService employeeService,
                            EmployeeDTOService employeeDTOService,
-                           EmployeeUpdateDTOService employeeUpdateDTOService,
+                           EmployeeDetailDTOService employeeDetailDTOService,
                            RoleService roleService) {
         this.departmentService = departmentService;
         this.employeeService = employeeService;
         this.employeeDTOService = employeeDTOService;
-        this.employeeUpdateDTOService = employeeUpdateDTOService;
+        this.employeeDetailDTOService = employeeDetailDTOService;
         this.roleService = roleService;
     }
 
@@ -102,12 +102,12 @@ public class AdminController {
      */
     @GetMapping(EMPLOYEE_ID_PARAMETER)
     public String getMemberDetail(@PathVariable Long id, Model model) {
-        EmployeeUpdateDtO employeeUpdateDtO = employeeUpdateDTOService.get(id);
+        EmployeeDetailDTO employeeDetailDTO = employeeDetailDTOService.get(id);
         List<DepartmentDTO> departmentDTOS = departmentService.getAll();
         List<Role> roles = roleService.getAll();
         model.addAttribute(IS_UPDATE_ATTRIBUTE, true);
         model.addAttribute(OPERATION_ATTRIBUTE, UPDATE_ATTRIBUTE_VALUE);
-        model.addAttribute(EMPLOYEE_ATTRIBUTE, employeeUpdateDtO);
+        model.addAttribute(EMPLOYEE_ATTRIBUTE, employeeDetailDTO);
         model.addAttribute(DEPARTMENTS_ATTRIBUTE, departmentDTOS);
         model.addAttribute(ROLES_ATTRIBUTE, roles);
         return EMPLOYEE_DETAIL_VIEW_FRAGMENT;
@@ -119,7 +119,7 @@ public class AdminController {
      */
     @GetMapping(CREATE_EMPLOYEE_PARAMETER)
     public String create(Model model) {
-        EmployeeUpdateDtO employeeUpdateDtO = new EmployeeUpdateDtO();
+        EmployeeDetailDTO employeeUpdateDtO = new EmployeeDetailDTO();
         List<DepartmentDTO> departmentDTOS = departmentService.getAll();
         List<Role> roles = roleService.getAll();
         model.addAttribute(OPERATION_ATTRIBUTE, CREATE_ATTRIBUTE_VALUE);
@@ -131,12 +131,12 @@ public class AdminController {
     }
 
     /**
-     * @param employeeUpdateDtO employee dto
+     * @param employeeDetailDTO employee dto
      * @return directory of employee for admin
      */
     @PostMapping(SAVE_EMPLOYEE_PARAMETER)
-    public String save(@ModelAttribute EmployeeUpdateDtO employeeUpdateDtO) {
-        employeeUpdateDTOService.save(employeeUpdateDtO);
+    public String save(@ModelAttribute EmployeeDetailDTO employeeDetailDTO) {
+        employeeDetailDTOService.save(employeeDetailDTO);
         return EMPLOYEE_DIRECTORY_REDIRECT;
     }
 

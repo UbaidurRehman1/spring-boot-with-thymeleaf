@@ -9,10 +9,10 @@
         <div class="col-4">
             <div class="card" style="width: 18rem; margin-top: 2rem">
                 <h5 class="card-title" style="text-align: center">Man of the Month</h5>
-                <img class="card-img-top" th:src="${employeeOfMonth.getPicture()}" th:alt="${employeeOfMonth.getName()}"
+                <img class="card-img-top" th:src="${employeeOfMonth.picture}" th:alt="${employeeOfMonth.name}"
                      alt="" src="">
                 <div class="card-body">
-                    <p class="card-text" th:text="${employeeOfMonth.getName()}"></p>
+                    <p class="card-text" th:text="${employeeOfMonth.name}"></p>
                 </div>
             </div>
         </div>
