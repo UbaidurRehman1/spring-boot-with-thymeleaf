@@ -57,19 +57,13 @@
         </div>
         <div class="row">
             <div class="col-6">
-                <div class="form-group row" th:if="${#bools.isFalse(employee.isAdmin())}">
+                <div class="form-group row">
                     <label for="level" class="col-sm-3 col-form-label">User Level</label>
                     <div class="col-sm-9">
                         <select id="level" th:field="${employee.level}" th:value="${employee.level}">
                             <option th:each="level : ${roles}" th:value="${level.role}"
                                     th:text="${level.role.role}"></option>
                         </select>
-                    </div>
-                </div>
-                <div class="form-group row" th:if="${#bools.isTrue(employee.isAdmin())}">
-                    <label for="admin" class="col-sm-3 col-form-label">User Level</label>
-                    <div class="col-sm-9">
-                        <input id="admin" readonly type="text" th:value="${employee.level.role}" th:field="${employee.level}">
                     </div>
                 </div>
             </div>
