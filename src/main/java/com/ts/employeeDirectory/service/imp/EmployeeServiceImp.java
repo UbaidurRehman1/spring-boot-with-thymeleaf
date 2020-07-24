@@ -1,11 +1,14 @@
 package com.ts.employeeDirectory.service.imp;
 
 import com.ts.employeeDirectory.entity.Employee;
+import com.ts.employeeDirectory.exception.SelfDeleteException;
 import com.ts.employeeDirectory.exception.UserNotFoundException;
 import com.ts.employeeDirectory.repo.EmployeeRepo;
+import com.ts.employeeDirectory.security.UserDetailsImp;
 import com.ts.employeeDirectory.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,12 +29,14 @@ public class EmployeeServiceImp implements EmployeeService {
             Employee employee = employeeRepo.findById(id).orElseThrow(() -> {
                 throw new UserNotFoundException("Request User is not found");
             });
+            isCurrentLoggedInUserTryingToDeleteItSelf(employee);
             employeeRepo.delete(employee);
             log.info("Deleted");
         } catch (Exception exp) {
             throw new RuntimeException(exp.getMessage());
         }
     }
+
 
     @Override
     public Employee getUserByLogin(String login) {
@@ -41,5 +46,17 @@ public class EmployeeServiceImp implements EmployeeService {
         });
         log.info("Employee Found: {}", employee);
         return employee;
+    }
+
+    private void isCurrentLoggedInUserTryingToDeleteItSelf(Employee employee) {
+        if (employee.getId().equals(getCurrentLoggedInEmployee().getId())) {
+            throw new SelfDeleteException("The Admin cannot delete itself");
+        }
+    }
+
+    private Employee getCurrentLoggedInEmployee() {
+        UserDetailsImp userDetailsImp = (UserDetailsImp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetailsImp.getUsername();
+        return getUserByLogin(username);
     }
 }
