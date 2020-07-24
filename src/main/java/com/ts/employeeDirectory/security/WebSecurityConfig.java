@@ -37,8 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-    public WebSecurityConfig(@Qualifier("userDetailServiceImp") @Autowired UserDetailsService userDetailsService,
-                             @Autowired PasswordEncoder passwordEncoder) {
+    @Autowired
+    public WebSecurityConfig(@Qualifier("userDetailServiceImp") UserDetailsService userDetailsService,
+                             PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -61,17 +62,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and().csrf().disable()
 
                 .authorizeRequests()
-                    .antMatchers(UNPROTECTED_END_POINTS).permitAll()
-                    .antMatchers(ADMIN_PROTECTED_END_POINTS).hasRole(ADMIN_ROLE)
-                    .antMatchers(ADMIN_USER_PROTECTED_END_POINTS).hasAnyRole(ALL_ROLES)
-                    .anyRequest().authenticated()
+                .antMatchers(UNPROTECTED_END_POINTS).permitAll()
+                .antMatchers(ADMIN_PROTECTED_END_POINTS).hasRole(ADMIN_ROLE)
+                .antMatchers(ADMIN_USER_PROTECTED_END_POINTS).hasAnyRole(ALL_ROLES)
+                .anyRequest().authenticated()
                 .and()
-                    .formLogin()
-                    .loginPage(LOGIN_PAGE)
-                    .successForwardUrl(SUCCESS_FORWARD_URL)
-                    .permitAll()
+                .formLogin()
+                .loginPage(LOGIN_PAGE)
+                .successForwardUrl(SUCCESS_FORWARD_URL)
+                .permitAll()
                 .and()
-                    .logout()
-                    .permitAll();
+                .logout()
+                .permitAll();
     }
 }

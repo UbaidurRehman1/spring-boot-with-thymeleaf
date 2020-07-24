@@ -8,7 +8,6 @@ import com.ts.employeeDirectory.exception.ManOfMonthNotFoundException;
 import com.ts.employeeDirectory.exception.UserNotFoundException;
 import com.ts.employeeDirectory.repo.EmployeeRepo;
 import com.ts.employeeDirectory.service.DepartmentService;
-import com.ts.employeeDirectory.service.EmployeeDetailDTOService;
 import com.ts.employeeDirectory.service.EmployeeUpdateDTOService;
 import com.ts.employeeDirectory.service.RoleService;
 import org.slf4j.Logger;
@@ -27,10 +26,11 @@ public class EmployeeUpdateDTOServiceImp implements EmployeeUpdateDTOService {
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
-    public EmployeeUpdateDTOServiceImp(@Autowired EmployeeRepo employeeRepo,
-                                       @Autowired DepartmentService departmentService,
-                                       @Autowired RoleService roleService,
-                                       @Autowired PasswordEncoder passwordEncoder) {
+    @Autowired
+    public EmployeeUpdateDTOServiceImp(EmployeeRepo employeeRepo,
+                                       DepartmentService departmentService,
+                                       RoleService roleService,
+                                       PasswordEncoder passwordEncoder) {
         this.employeeRepo = employeeRepo;
         this.departmentService = departmentService;
         this.roleService = roleService;

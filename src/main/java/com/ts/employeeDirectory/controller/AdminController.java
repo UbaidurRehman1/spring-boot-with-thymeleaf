@@ -52,11 +52,12 @@ public class AdminController {
     private final EmployeeUpdateDTOService employeeUpdateDTOService;
     private final RoleService roleService;
 
-    public AdminController(@Autowired DepartmentService departmentService,
-                           @Autowired EmployeeService employeeService,
-                           @Autowired EmployeeDTOService employeeDTOService,
-                           @Autowired EmployeeUpdateDTOService employeeUpdateDTOService,
-                           @Autowired RoleService roleService) {
+    @Autowired
+    public AdminController(DepartmentService departmentService,
+                           EmployeeService employeeService,
+                           EmployeeDTOService employeeDTOService,
+                           EmployeeUpdateDTOService employeeUpdateDTOService,
+                           RoleService roleService) {
         this.departmentService = departmentService;
         this.employeeService = employeeService;
         this.employeeDTOService = employeeDTOService;

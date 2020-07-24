@@ -8,6 +8,7 @@ import com.ts.employeeDirectory.repo.DepartmentRepo;
 import com.ts.employeeDirectory.service.DepartmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class DepartmentServiceImp implements DepartmentService {
 
     private final DepartmentRepo departmentRepo;
 
+    @Autowired
     public DepartmentServiceImp(DepartmentRepo departmentRepo) {
         this.departmentRepo = departmentRepo;
     }

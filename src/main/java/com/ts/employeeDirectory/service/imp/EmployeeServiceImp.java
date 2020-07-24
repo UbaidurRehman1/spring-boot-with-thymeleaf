@@ -15,7 +15,8 @@ public class EmployeeServiceImp implements EmployeeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeService.class);
     private final EmployeeRepo employeeRepo;
 
-    public EmployeeServiceImp(@Autowired EmployeeRepo employeeRepo) {
+    @Autowired
+    public EmployeeServiceImp(EmployeeRepo employeeRepo) {
         this.employeeRepo = employeeRepo;
     }
 

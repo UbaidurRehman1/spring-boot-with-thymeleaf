@@ -7,6 +7,7 @@ import com.ts.employeeDirectory.repo.RoleRepo;
 import com.ts.employeeDirectory.service.RoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class RoleServiceImp implements RoleService {
 
     private final RoleRepo roleRepo;
 
+    @Autowired
     public RoleServiceImp(RoleRepo roleRepo) {
         this.roleRepo = roleRepo;
     }

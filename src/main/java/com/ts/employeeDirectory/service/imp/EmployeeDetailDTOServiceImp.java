@@ -8,6 +8,7 @@ import com.ts.employeeDirectory.repo.EmployeeRepo;
 import com.ts.employeeDirectory.service.EmployeeDetailDTOService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,7 @@ public class EmployeeDetailDTOServiceImp implements EmployeeDetailDTOService {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeDetailDTOService.class);
     private final EmployeeRepo employeeRepo;
 
+    @Autowired
     public EmployeeDetailDTOServiceImp(EmployeeRepo employeeRepo) {
         this.employeeRepo = employeeRepo;
     }

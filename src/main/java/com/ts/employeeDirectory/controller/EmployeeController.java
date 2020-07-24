@@ -35,14 +35,15 @@ public class EmployeeController {
     private final static String EMPLOYEES_ATTRIBUTE = "employeesList";
     private final static String MAN_OF_MONTH_ATTRIBUTE = "employeeOfMonth";
     private final static String DEPARTMENTS_ATTRIBUTE = "departments";
-    
+
     private final DepartmentService departmentService;
     private final EmployeeDetailDTOService employeeDetailDTOService;
     private final EmployeeDTOService employeeDTOService;
 
-    public EmployeeController(@Autowired EmployeeDetailDTOService employeeDetailDTOService,
-                              @Autowired DepartmentService departmentService,
-                              @Autowired EmployeeDTOService employeeDTOService) {
+    @Autowired
+    public EmployeeController(EmployeeDetailDTOService employeeDetailDTOService,
+                              DepartmentService departmentService,
+                              EmployeeDTOService employeeDTOService) {
         this.departmentService = departmentService;
         this.employeeDetailDTOService = employeeDetailDTOService;
         this.employeeDTOService = employeeDTOService;

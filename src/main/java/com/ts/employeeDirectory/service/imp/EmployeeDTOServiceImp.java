@@ -19,7 +19,8 @@ public class EmployeeDTOServiceImp implements EmployeeDTOService {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeDTOService.class);
     private final EmployeeRepo employeeRepo;
 
-    public EmployeeDTOServiceImp(@Autowired EmployeeRepo employeeRepo) {
+    @Autowired
+    public EmployeeDTOServiceImp(EmployeeRepo employeeRepo) {
         this.employeeRepo = employeeRepo;
     }
 
