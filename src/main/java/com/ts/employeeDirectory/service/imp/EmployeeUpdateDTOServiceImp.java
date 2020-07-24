@@ -50,22 +50,17 @@ public class EmployeeUpdateDTOServiceImp implements EmployeeUpdateDTOService {
     @Override
     public void save(EmployeeUpdateDtO employeeUpdateDtO) {
         try {
-            Long id = employeeUpdateDtO.getId();
-            if (id != null) {
+            if (isRequestForUpdateEmployee(employeeUpdateDtO)) {
                 LOGGER.info("Updating Employee: {}", employeeUpdateDtO);
             } else {
                 LOGGER.info("Creating New Employee: {}", employeeUpdateDtO);
             }
-            setCurrentManOfMonthFalse();
-            Employee employee = new Employee();
-            employee = employee.createEmployee(employeeUpdateDtO);
-            Department department = departmentService.get(employeeUpdateDtO.getDepartment().getId());
-            Role role = roleService.findByRole(employeeUpdateDtO.getLevel());
-            employee.setDepartment(department);
-            employee.addRole(role);
-            employee.setPassword(passwordEncoder.encode(employeeUpdateDtO.getPassword()));
+            if (isRequestForMakeEmployeeManOfMonth(employeeUpdateDtO)) {
+                setCurrentManOfMonthFalse();
+            }
+            Employee employee = getEmployee(employeeUpdateDtO);
             employeeRepo.save(employee).getEmployeeDTO();
-            if (id != null) {
+            if (isRequestForUpdateEmployee(employeeUpdateDtO)) {
                 LOGGER.info("Employee Updated");
             } else {
                 LOGGER.info("Employee Created");
@@ -73,6 +68,26 @@ public class EmployeeUpdateDTOServiceImp implements EmployeeUpdateDTOService {
         } catch (Exception exp) {
             throw new RuntimeException(exp.getMessage());
         }
+    }
+
+    private Employee getEmployee(EmployeeUpdateDtO employeeUpdateDtO) {
+        Employee employee = new Employee();
+        employee = employee.createEmployee(employeeUpdateDtO);
+        Department department = departmentService.get(employeeUpdateDtO.getDepartment().getId());
+        Role role = roleService.findByRole(employeeUpdateDtO.getLevel());
+        employee.setDepartment(department);
+        employee.addRole(role);
+        employee.setPassword(passwordEncoder.encode(employeeUpdateDtO.getPassword()));
+        return employee;
+    }
+
+
+    private boolean isRequestForUpdateEmployee(EmployeeUpdateDtO employeeUpdateDtO) {
+        return employeeUpdateDtO.getId() != null;
+    }
+
+    private boolean isRequestForMakeEmployeeManOfMonth(EmployeeUpdateDtO employeeUpdateDtO) {
+        return employeeUpdateDtO.getIsManOfMonth();
     }
 
     private void setCurrentManOfMonthFalse() {
