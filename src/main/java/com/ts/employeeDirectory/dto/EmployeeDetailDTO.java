@@ -36,4 +36,9 @@ public class EmployeeDetailDTO extends EmployeeDTO {
         }
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
 }

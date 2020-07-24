@@ -25,4 +25,15 @@ public class EmployeeDTO {
     private String email;
     private EmployeeRole level;
     private Boolean isManOfMonth;
+
+    public boolean isAdmin() {
+        return getLevel() == EmployeeRole.ROLE_ADMIN;
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeeDTO{" +
+                "login='" + login + '\'' +
+                '}';
+    }
 }
