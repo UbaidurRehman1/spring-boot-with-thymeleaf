@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final static String ADMIN_ROLE = EmployeeRole.ROLE_ADMIN.getRole();
     private final static String LOGIN_PAGE = "/login";
-    private final static String VERY_NEXT_URL_AFTER_LOGIN = "/employees";
+    private final static String SUCCESS_FORWARD_URL = "/employees";
 
 
     private final UserDetailsService userDetailsService;
@@ -68,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .formLogin()
                     .loginPage(LOGIN_PAGE)
-                    .successForwardUrl(VERY_NEXT_URL_AFTER_LOGIN)
+                    .successForwardUrl(SUCCESS_FORWARD_URL)
                     .permitAll()
                 .and()
                     .logout()
