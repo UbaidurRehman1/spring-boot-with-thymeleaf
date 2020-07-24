@@ -22,28 +22,29 @@ import java.util.List;
 @RequestMapping("admin")
 public class AdminController {
 
-    private final static String RETURN_MENU = "views/admin/adminMenu";
-    private final static String RETURN_DEPARTMENTS = "views/admin/departments";
-    private final static String RETURN_DIRECTORY = "views/admin/directory";
-    private final static String RETURN_EMPLOYEE = "views/admin/employee";
-    private final static String REDIRECT_DIRECTORY = "redirect:/admin/members";
+    private final static String ADMIN_MENU_VIEW_FRAGMENT = "views/admin/adminMenu";
+    private final static String DEPARTMENT_LISTING_VIEW_FRAGMENT = "views/admin/departments";
+    private final static String EMPLOYEE_DIRECTORY_VIEW_FRAGMENT = "views/admin/directory";
+    private final static String EMPLOYEE_DETAIL_VIEW_FRAGMENT = "views/admin/employee";
 
-    private final static String END_POINT_DIRECTORY = "members";
-    private final static String END_POINT_DEPARTMENT = "department";
-    private final static String END_POINT_EMPLOYEE = "members/{id}";
-    private final static String END_POINT_CREATE_EMPLOYEE = "employee/create";
-    private final static String END_POINT_SAVE_EMPLOYEE = "employee/save";
-    private final static String END_POINT_DELETE_EMPLOYEE = "delete/{id}";
+    private final static String EMPLOYEE_DIRECTORY_REDIRECT = "redirect:/admin/members";
 
-    private final static String ATTRIBUTE_EMPLOYEE = "employee";
-    private final static String ATTRIBUTE_EMPLOYEES = "employeeList";
-    private final static String ATTRIBUTE_OPERATION = "operation";
-    private final static String ATTRIBUTE_IS_UPDATE = "isUpdate";
-    private final static String ATTRIBUTE_DEPARTMENTS = "departments";
-    private final static String ATTRIBUTE_ROLES = "roles";
+    private final static String EMPLOYEE_DIRECTORY_PARAMETER = "members";
+    private final static String DEPARTMENT_PARAMETER = "department";
+    private final static String EMPLOYEE_ID_PARAMETER = "members/{id}";
+    private final static String CREATE_EMPLOYEE_PARAMETER = "employee/create";
+    private final static String SAVE_EMPLOYEE_PARAMETER = "employee/save";
+    private final static String DELETE_ID_PARAMETER = "delete/{id}";
 
-    private final static String ATTRIBUTE_VALUE_UPDATE = "Update";
-    private final static String ATTRIBUTE_VALUE_CREATE = "Create";
+    private final static String EMPLOYEE_ATTRIBUTE = "employee";
+    private final static String EMPLOYEES_ATTRIBUTE = "employeeList";
+    private final static String OPERATION_ATTRIBUTE = "operation";
+    private final static String IS_UPDATE_ATTRIBUTE = "isUpdate";
+    private final static String DEPARTMENTS_ATTRIBUTE = "departments";
+    private final static String ROLES_ATTRIBUTE = "roles";
+
+    private final static String UPDATE_ATTRIBUTE_VALUE = "Update";
+    private final static String CREATE_ATTRIBUTE_VALUE = "Create";
 
     private final DepartmentService departmentService;
     private final EmployeeService employeeService;
@@ -68,29 +69,29 @@ public class AdminController {
      */
     @GetMapping
     public String adminMenu() {
-        return RETURN_MENU;
+        return ADMIN_MENU_VIEW_FRAGMENT;
     }
 
     /**
      * @param model model
      * @return list of departments view
      */
-    @GetMapping(END_POINT_DEPARTMENT)
+    @GetMapping(DEPARTMENT_PARAMETER)
     public String departments(Model model) {
         List<DepartmentDTO> departmentDTOS = departmentService.getAll();
-        model.addAttribute(ATTRIBUTE_DEPARTMENTS, departmentDTOS);
-        return RETURN_DEPARTMENTS;
+        model.addAttribute(DEPARTMENTS_ATTRIBUTE, departmentDTOS);
+        return DEPARTMENT_LISTING_VIEW_FRAGMENT;
     }
 
     /**
      * @param model model
      * @return directory of employees for admin
      */
-    @GetMapping(END_POINT_DIRECTORY)
+    @GetMapping(EMPLOYEE_DIRECTORY_PARAMETER)
     public String members(Model model) {
         List<EmployeeDTO> employeeDTOS = employeeDTOService.geAll();
-        model.addAttribute(ATTRIBUTE_EMPLOYEES, employeeDTOS);
-        return RETURN_DIRECTORY;
+        model.addAttribute(EMPLOYEES_ATTRIBUTE, employeeDTOS);
+        return EMPLOYEE_DIRECTORY_VIEW_FRAGMENT;
     }
 
     /**
@@ -98,53 +99,53 @@ public class AdminController {
      * @param model model
      * @return employee detail for admin
      */
-    @GetMapping(END_POINT_EMPLOYEE)
+    @GetMapping(EMPLOYEE_ID_PARAMETER)
     public String getMemberDetail(@PathVariable Long id, Model model) {
         EmployeeUpdateDtO employeeUpdateDtO = employeeUpdateDTOService.get(id);
         List<DepartmentDTO> departmentDTOS = departmentService.getAll();
         List<Role> roles = roleService.getAll();
-        model.addAttribute(ATTRIBUTE_IS_UPDATE, true);
-        model.addAttribute(ATTRIBUTE_OPERATION, ATTRIBUTE_VALUE_UPDATE);
-        model.addAttribute(ATTRIBUTE_EMPLOYEE, employeeUpdateDtO);
-        model.addAttribute(ATTRIBUTE_DEPARTMENTS, departmentDTOS);
-        model.addAttribute(ATTRIBUTE_ROLES, roles);
-        return RETURN_EMPLOYEE;
+        model.addAttribute(IS_UPDATE_ATTRIBUTE, true);
+        model.addAttribute(OPERATION_ATTRIBUTE, UPDATE_ATTRIBUTE_VALUE);
+        model.addAttribute(EMPLOYEE_ATTRIBUTE, employeeUpdateDtO);
+        model.addAttribute(DEPARTMENTS_ATTRIBUTE, departmentDTOS);
+        model.addAttribute(ROLES_ATTRIBUTE, roles);
+        return EMPLOYEE_DETAIL_VIEW_FRAGMENT;
     }
 
     /**
      * @param model model
      * @return form for creating employee
      */
-    @GetMapping(END_POINT_CREATE_EMPLOYEE)
+    @GetMapping(CREATE_EMPLOYEE_PARAMETER)
     public String create(Model model) {
         EmployeeUpdateDtO employeeUpdateDtO = new EmployeeUpdateDtO();
         List<DepartmentDTO> departmentDTOS = departmentService.getAll();
         List<Role> roles = roleService.getAll();
-        model.addAttribute(ATTRIBUTE_OPERATION, ATTRIBUTE_VALUE_CREATE);
-        model.addAttribute(ATTRIBUTE_IS_UPDATE, false);
-        model.addAttribute(ATTRIBUTE_EMPLOYEE, employeeUpdateDtO);
-        model.addAttribute(ATTRIBUTE_DEPARTMENTS, departmentDTOS);
-        model.addAttribute(ATTRIBUTE_ROLES, roles);
-        return RETURN_EMPLOYEE;
+        model.addAttribute(OPERATION_ATTRIBUTE, CREATE_ATTRIBUTE_VALUE);
+        model.addAttribute(IS_UPDATE_ATTRIBUTE, false);
+        model.addAttribute(EMPLOYEE_ATTRIBUTE, employeeUpdateDtO);
+        model.addAttribute(DEPARTMENTS_ATTRIBUTE, departmentDTOS);
+        model.addAttribute(ROLES_ATTRIBUTE, roles);
+        return EMPLOYEE_DETAIL_VIEW_FRAGMENT;
     }
 
     /**
      * @param employeeUpdateDtO employee dto
      * @return directory of employee for admin
      */
-    @PostMapping(END_POINT_SAVE_EMPLOYEE)
+    @PostMapping(SAVE_EMPLOYEE_PARAMETER)
     public String save(@ModelAttribute EmployeeUpdateDtO employeeUpdateDtO) {
         employeeUpdateDTOService.save(employeeUpdateDtO);
-        return REDIRECT_DIRECTORY;
+        return EMPLOYEE_DIRECTORY_REDIRECT;
     }
 
     /**
      * @param id of employee to delete
      * @return employee directory for admin
      */
-    @RequestMapping(END_POINT_DELETE_EMPLOYEE)
+    @RequestMapping(DELETE_ID_PARAMETER)
     public String delete(@PathVariable Long id) {
         employeeService.delete(id);
-        return REDIRECT_DIRECTORY;
+        return EMPLOYEE_DIRECTORY_REDIRECT;
     }
 }

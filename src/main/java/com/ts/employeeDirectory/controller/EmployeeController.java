@@ -26,18 +26,16 @@ import java.util.List;
 @RequestMapping("employees")
 public class EmployeeController {
 
-    private final static String END_POINT_EMPLOYEE = "{id}";
+    private final static String ID_PARAMETER = "{id}";
 
-    private final static String RETURN_EMPLOYEES = "/views/employee/employeeDirectory";
-    private final static String RETURN_EMPLOYEE = "/views/employee/employeeDetail";
+    private final static String EMPLOYEES_DIRECTORY_VIEW_FRAGMENT = "/views/employee/employeeDirectory";
+    private final static String EMPLOYEE_DETAIL_VIEW_FRAGMENT = "/views/employee/employeeDetail";
 
-    private final static String ATTRIBUTE_EMPLOYEE = "employee";
-    private final static String ATTRIBUTE_EMPLOYEES = "employeesList";
-    private final static String ATTRIBUTE_MAN_OF_MONTH = "employeeOfMonth";
-    private final static String ATTRIBUTE_DEPARTMENTS = "departments";
-
-
-
+    private final static String EMPLOYEE_ATTRIBUTE = "employee";
+    private final static String EMPLOYEES_ATTRIBUTE = "employeesList";
+    private final static String MAN_OF_MONTH_ATTRIBUTE = "employeeOfMonth";
+    private final static String DEPARTMENTS_ATTRIBUTE = "departments";
+    
     private final DepartmentService departmentService;
     private final EmployeeDetailDTOService employeeDetailDTOService;
     private final EmployeeDTOService employeeDTOService;
@@ -51,7 +49,6 @@ public class EmployeeController {
     }
 
     /**
-     *
      * @param model model
      * @return employee directory for employee (user role)
      */
@@ -59,22 +56,21 @@ public class EmployeeController {
     public String getEmployeeDirectory(Model model) {
         List<EmployeeDTO> employeeDTOS = employeeDTOService.geAll();
         List<DepartmentDTO> departmentDTOS = departmentService.getAll();
-        model.addAttribute(ATTRIBUTE_MAN_OF_MONTH, employeeDetailDTOService.getManOfTheMonthEmployee());
-        model.addAttribute(ATTRIBUTE_EMPLOYEES, employeeDTOS);
-        model.addAttribute(ATTRIBUTE_DEPARTMENTS, departmentDTOS);
-        return RETURN_EMPLOYEES;
+        model.addAttribute(MAN_OF_MONTH_ATTRIBUTE, employeeDetailDTOService.getManOfTheMonthEmployee());
+        model.addAttribute(EMPLOYEES_ATTRIBUTE, employeeDTOS);
+        model.addAttribute(DEPARTMENTS_ATTRIBUTE, departmentDTOS);
+        return EMPLOYEES_DIRECTORY_VIEW_FRAGMENT;
     }
 
     /**
-     *
-     * @param id of employee
+     * @param id    of employee
      * @param model model
      * @return employee detail view
      */
-    @GetMapping(END_POINT_EMPLOYEE)
+    @GetMapping(ID_PARAMETER)
     public String getEmployeeDetail(@PathVariable Long id, Model model) {
         EmployeeDetailDTO employeeDetailDTO = employeeDetailDTOService.get(id);
-        model.addAttribute(ATTRIBUTE_EMPLOYEE, employeeDetailDTO);
-        return RETURN_EMPLOYEE;
+        model.addAttribute(EMPLOYEE_ATTRIBUTE, employeeDetailDTO);
+        return EMPLOYEE_DETAIL_VIEW_FRAGMENT;
     }
 }

@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionHandlerController {
 
-    private final static String RETURN_ERROR = "/views/error/error";
-    private final static String ATTRIBUTE_EXCEPTION = "exception";
+    private final static String ERROR_VIEW_FRAGMENT = "/views/error/error";
+
+    private final static String EXCEPTION_ATTRIBUTE = "exception";
 
     @ExceptionHandler(value = AppRuntimeException.class)
     public String handleEmployeeDirectoryException(Model model, AppRuntimeException exp) {
@@ -30,8 +31,8 @@ public class ExceptionHandlerController {
         } catch (NullPointerException ignore) {
 
         }
-        model.addAttribute(ATTRIBUTE_EXCEPTION, exceptionBody);
-        return RETURN_ERROR;
+        model.addAttribute(EXCEPTION_ATTRIBUTE, exceptionBody);
+        return ERROR_VIEW_FRAGMENT;
     }
 
     @ExceptionHandler(value = Exception.class)
@@ -43,7 +44,7 @@ public class ExceptionHandlerController {
         } catch (NullPointerException ignore) {
 
         }
-        model.addAttribute(ATTRIBUTE_EXCEPTION, exceptionBody);
-        return RETURN_ERROR;
+        model.addAttribute(EXCEPTION_ATTRIBUTE, exceptionBody);
+        return ERROR_VIEW_FRAGMENT;
     }
 }

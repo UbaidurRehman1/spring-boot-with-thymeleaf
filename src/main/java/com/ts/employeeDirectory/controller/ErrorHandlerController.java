@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ErrorHandlerController implements ErrorController {
 
-    private static final String END_POINT_ERROR = "/error";
-    private static final String RETURN_ERROR = "/views/error/error";
+    private static final String ERROR_PARAMETER = "/error";
 
-    private static final String ATTRIBUTE_EXCEPTION = "exception";
+    private static final String ERROR_VIEW_FRAGMENT = "/views/error/error";
 
-    @RequestMapping(END_POINT_ERROR)
+    private static final String EXCEPTION_ATTRIBUTE = "exception";
+
+    @RequestMapping(ERROR_PARAMETER)
     public String handleUnhandledError(Model model, Exception exp) {
         ExceptionBody exceptionBody = new ExceptionBody();
         try {
@@ -28,12 +29,12 @@ public class ErrorHandlerController implements ErrorController {
 
         }
         exceptionBody.setMessage(exp.getMessage());
-        model.addAttribute(ATTRIBUTE_EXCEPTION, exceptionBody);
-        return RETURN_ERROR;
+        model.addAttribute(EXCEPTION_ATTRIBUTE, exceptionBody);
+        return ERROR_VIEW_FRAGMENT;
     }
 
     @Override
     public String getErrorPath() {
-        return END_POINT_ERROR;
+        return ERROR_PARAMETER;
     }
 }
