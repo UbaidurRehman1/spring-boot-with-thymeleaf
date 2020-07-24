@@ -73,7 +73,7 @@
                     <td th:text="${employee.title}"></td>
                     <td th:text="${employee.department.name}"></td>
                     <td th:text="${employee.workPhone}"></td>
-                    <td th:text="${employee.email}"></td>
+                    <td><a th:text="${employee.email}" th:href="'mailto:' + ${employee.email}"></a></td>
                 </tr>
                 </tbody>
             </table>
