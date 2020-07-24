@@ -1,4 +1,4 @@
-package com.ts.employeeDirectory.entity;
+package com.ts.employeeDirectory.enumeration;
 
 import lombok.Data;
 

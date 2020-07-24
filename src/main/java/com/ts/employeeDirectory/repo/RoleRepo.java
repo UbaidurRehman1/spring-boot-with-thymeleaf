@@ -1,6 +1,6 @@
 package com.ts.employeeDirectory.repo;
 
-import com.ts.employeeDirectory.entity.EmployeeRole;
+import com.ts.employeeDirectory.enumeration.EmployeeRole;
 import com.ts.employeeDirectory.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

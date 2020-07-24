@@ -5,7 +5,7 @@ package com.ts.employeeDirectory.exception;
  *
  * @author ubaid
  */
-public class UserNotFoundException extends EmployeeDirectoryException {
+public class UserNotFoundException extends AppRuntimeException {
     public UserNotFoundException(String message) {
         super(message);
     }

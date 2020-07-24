@@ -56,7 +56,7 @@
                     <th scope="row"><a th:href="@{|/admin/members/${employee.id}|}">Edit</a></th>
                     <td th:text="${employee.login}"></td>
                     <td th:text="${employee.name}"></td>
-                    <td th:text="${employee.level}"></td>
+                    <td th:text="${employee.level.role}"></td>
                     <td><span th:if="${employee.isManOfMonth}">Yes</span></td>
                 </tr>
                 </tbody>

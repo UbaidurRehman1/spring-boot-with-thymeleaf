@@ -5,8 +5,8 @@ package com.ts.employeeDirectory.exception;
  *
  * @author ubaid
  */
-public abstract class EmployeeDirectoryException extends RuntimeException {
-    public EmployeeDirectoryException(String message) {
+public abstract class AppRuntimeException extends RuntimeException {
+    public AppRuntimeException(String message) {
         super(message);
     }
 }

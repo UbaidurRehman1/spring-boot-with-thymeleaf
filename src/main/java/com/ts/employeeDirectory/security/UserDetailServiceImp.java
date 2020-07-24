@@ -20,7 +20,8 @@ public class UserDetailServiceImp implements UserDetailsService {
 
     private final EmployeeService employeeService;
 
-    public UserDetailServiceImp(@Autowired EmployeeService employeeService) {
+    @Autowired
+    public UserDetailServiceImp(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 

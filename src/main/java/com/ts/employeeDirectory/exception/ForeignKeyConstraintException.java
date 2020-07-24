@@ -5,7 +5,7 @@ package com.ts.employeeDirectory.exception;
  *
  * @author ubaid
  */
-public class ForeignKeyConstraintException extends EmployeeDirectoryException {
+public class ForeignKeyConstraintException extends AppRuntimeException {
     public ForeignKeyConstraintException(String message) {
         super(message);
     }

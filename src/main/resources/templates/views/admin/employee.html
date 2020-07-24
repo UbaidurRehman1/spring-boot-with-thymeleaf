@@ -60,9 +60,9 @@
                 <div class="form-group row">
                     <label for="level" class="col-sm-3 col-form-label">User Level</label>
                     <div class="col-sm-9">
-                        <select id="level" th:field="${employee.level}">
-                            <option th:each="level : ${roles}" th:value="${level.getRole()}"
-                                    th:text="${level.getRole().name()}"></option>
+                        <select id="level" th:field="${employee.level}" th:value="${employee.level}">
+                            <option th:each="level : ${roles}" th:value="${level.role}"
+                                    th:text="${level.role.role}"></option>
                         </select>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                 <div class="form-group row">
                     <label for="address" class="col-sm-3 col-form-label">Address</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="address" th:field="${employee.address}" required>
+                        <input type="text" class="form-control" id="address" th:field="${employee.address}">
                     </div>
                 </div>
             </div>
@@ -117,7 +117,7 @@
                 <div class="form-group row">
                     <label for="homePhone" class="col-sm-3 col-form-label">Home Phone</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="homePhone" th:field="${employee.homePhone}">
+                        <input type="text" class="form-control" id="homePhone" th:field="${employee.homePhone}" required>
                     </div>
                 </div>
             </div>
@@ -148,7 +148,7 @@
                 <div class="form-group row">
                     <label for="picture" class="col-sm-3 col-form-label">Picture</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="picture" th:field="${employee.picture}">
+                        <input type="text" class="form-control" id="picture" th:field="${employee.picture}" required>
                     </div>
                 </div>
             </div>

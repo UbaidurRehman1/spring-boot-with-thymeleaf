@@ -1,6 +1,6 @@
 package com.ts.employeeDirectory.security;
 
-import com.ts.employeeDirectory.entity.EmployeeRole;
+import com.ts.employeeDirectory.enumeration.EmployeeRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -31,14 +31,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final static String ADMIN_ROLE = EmployeeRole.ROLE_ADMIN.getRole();
     private final static String LOGIN_PAGE = "/login";
-    private final static String VERY_NEXT_URL_AFTER_LOGIN = "/employees";
+    private final static String SUCCESS_FORWARD_URL = "/employees";
 
 
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-    public WebSecurityConfig(@Qualifier("userDetailServiceImp") @Autowired UserDetailsService userDetailsService,
-                             @Autowired PasswordEncoder passwordEncoder) {
+    @Autowired
+    public WebSecurityConfig(@Qualifier("userDetailServiceImp") UserDetailsService userDetailsService,
+                             PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -61,17 +62,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and().csrf().disable()
 
                 .authorizeRequests()
-                    .antMatchers(UNPROTECTED_END_POINTS).permitAll()
-                    .antMatchers(ADMIN_PROTECTED_END_POINTS).hasRole(ADMIN_ROLE)
-                    .antMatchers(ADMIN_USER_PROTECTED_END_POINTS).hasAnyRole(ALL_ROLES)
-                    .anyRequest().authenticated()
+                .antMatchers(UNPROTECTED_END_POINTS).permitAll()
+                .antMatchers(ADMIN_PROTECTED_END_POINTS).hasRole(ADMIN_ROLE)
+                .antMatchers(ADMIN_USER_PROTECTED_END_POINTS).hasAnyRole(ALL_ROLES)
+                .anyRequest().authenticated()
                 .and()
-                    .formLogin()
-                    .loginPage(LOGIN_PAGE)
-                    .successForwardUrl(VERY_NEXT_URL_AFTER_LOGIN)
-                    .permitAll()
+                .formLogin()
+                .loginPage(LOGIN_PAGE)
+                .successForwardUrl(SUCCESS_FORWARD_URL)
+                .permitAll()
                 .and()
-                    .logout()
-                    .permitAll();
+                .logout()
+                .permitAll();
     }
 }

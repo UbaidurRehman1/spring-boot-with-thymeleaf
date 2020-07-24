@@ -1,11 +1,10 @@
 package com.ts.employeeDirectory.controller;
 
 import com.ts.employeeDirectory.dto.ExceptionBody;
-import com.ts.employeeDirectory.exception.EmployeeDirectoryException;
+import com.ts.employeeDirectory.exception.AppRuntimeException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Exception Handler
@@ -19,11 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @ControllerAdvice
 public class ExceptionHandlerController {
 
-    private final static String RETURN_ERROR = "/views/error/error";
-    private final static String ATTRIBUTE_EXCEPTION = "exception";
+    private final static String ERROR_VIEW_FRAGMENT = "/views/error/error";
 
-    @ExceptionHandler(value = EmployeeDirectoryException.class)
-    public String handleEmployeeDirectoryException(Model model, EmployeeDirectoryException exp) {
+    private final static String EXCEPTION_ATTRIBUTE = "exception";
+
+    @ExceptionHandler(value = AppRuntimeException.class)
+    public String handleEmployeeDirectoryException(Model model, AppRuntimeException exp) {
         ExceptionBody exceptionBody = new ExceptionBody();
         exceptionBody.setMessage(exp.getMessage());
         try {
@@ -31,8 +31,8 @@ public class ExceptionHandlerController {
         } catch (NullPointerException ignore) {
 
         }
-        model.addAttribute(ATTRIBUTE_EXCEPTION, exceptionBody);
-        return RETURN_ERROR;
+        model.addAttribute(EXCEPTION_ATTRIBUTE, exceptionBody);
+        return ERROR_VIEW_FRAGMENT;
     }
 
     @ExceptionHandler(value = Exception.class)
@@ -44,7 +44,7 @@ public class ExceptionHandlerController {
         } catch (NullPointerException ignore) {
 
         }
-        model.addAttribute(ATTRIBUTE_EXCEPTION, exceptionBody);
-        return RETURN_ERROR;
+        model.addAttribute(EXCEPTION_ATTRIBUTE, exceptionBody);
+        return ERROR_VIEW_FRAGMENT;
     }
 }

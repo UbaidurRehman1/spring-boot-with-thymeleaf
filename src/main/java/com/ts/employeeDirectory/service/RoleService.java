@@ -1,6 +1,6 @@
 package com.ts.employeeDirectory.service;
 
-import com.ts.employeeDirectory.entity.EmployeeRole;
+import com.ts.employeeDirectory.enumeration.EmployeeRole;
 import com.ts.employeeDirectory.entity.Role;
 
 import java.util.List;

@@ -1,45 +1,62 @@
 package com.ts.employeeDirectory.service.imp;
 
 import com.ts.employeeDirectory.entity.Employee;
+import com.ts.employeeDirectory.exception.SelfDeleteException;
 import com.ts.employeeDirectory.exception.UserNotFoundException;
 import com.ts.employeeDirectory.repo.EmployeeRepo;
+import com.ts.employeeDirectory.security.UserDetailsImp;
 import com.ts.employeeDirectory.service.EmployeeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class EmployeeServiceImp implements EmployeeService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeService.class);
     private final EmployeeRepo employeeRepo;
 
-    public EmployeeServiceImp(@Autowired EmployeeRepo employeeRepo) {
+    @Autowired
+    public EmployeeServiceImp(EmployeeRepo employeeRepo) {
         this.employeeRepo = employeeRepo;
     }
 
     @Override
     public void delete(Long id) {
-        LOGGER.info("Deleting Employee of id {}", id);
+        log.info("Deleting Employee of id {}", id);
         try {
             Employee employee = employeeRepo.findById(id).orElseThrow(() -> {
                 throw new UserNotFoundException("Request User is not found");
             });
+            isCurrentLoggedInUserTryingToDeleteItSelf(employee);
             employeeRepo.delete(employee);
-            LOGGER.info("Deleted");
+            log.info("Deleted");
         } catch (Exception exp) {
             throw new RuntimeException(exp.getMessage());
         }
     }
 
+
     @Override
     public Employee getUserByLogin(String login) {
-        LOGGER.info("Finding Employee of login: {}", login);
+        log.info("Finding Employee of login: {}", login);
         Employee employee = employeeRepo.findByLogin(login).orElseThrow(() -> {
             throw new UserNotFoundException("The Requested User not found");
         });
-        LOGGER.info("Employee Found: {}", employee);
+        log.info("Employee Found: {}", employee);
         return employee;
+    }
+
+    private void isCurrentLoggedInUserTryingToDeleteItSelf(Employee employee) {
+        if (employee.getId().equals(getCurrentLoggedInEmployee().getId())) {
+            throw new SelfDeleteException("The Admin cannot delete itself");
+        }
+    }
+
+    private Employee getCurrentLoggedInEmployee() {
+        UserDetailsImp userDetailsImp = (UserDetailsImp) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetailsImp.getUsername();
+        return getUserByLogin(username);
     }
 }

@@ -9,16 +9,16 @@
         <div class="col-4">
             <div class="card" style="width: 18rem; margin-top: 2rem">
                 <h5 class="card-title" style="text-align: center">Man of the Month</h5>
-                <img class="card-img-top" th:src="${employeeOfMonth.getPicture()}" th:alt="${employeeOfMonth.getName()}"
+                <img class="card-img-top" th:src="${employeeOfMonth.picture}" th:alt="${employeeOfMonth.name}"
                      alt="" src="">
                 <div class="card-body">
-                    <p class="card-text" th:text="${employeeOfMonth.getName()}"></p>
+                    <p class="card-text" th:text="${employeeOfMonth.name}"></p>
                 </div>
             </div>
         </div>
         <!--        Search Section      -->
         <div class="col-8">
-            <div class="card" style="width: 22rem; margin-top: 2rem">
+            <div class="card" style="width: 28rem; margin-top: 2rem">
                 <div class="card-body">
                     <h5 class="card-title">Search</h5>
                     <table class="table">
@@ -73,7 +73,7 @@
                     <td th:text="${employee.title}"></td>
                     <td th:text="${employee.department.name}"></td>
                     <td th:text="${employee.workPhone}"></td>
-                    <td th:text="${employee.email}"></td>
+                    <td><a th:text="${employee.email}" th:href="'mailto:' + ${employee.email}"></a></td>
                 </tr>
                 </tbody>
             </table>

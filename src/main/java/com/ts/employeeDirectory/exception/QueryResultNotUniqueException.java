@@ -5,7 +5,7 @@ package com.ts.employeeDirectory.exception;
  *
  * @author ubaid
  */
-public class QueryResultNotUniqueException extends EmployeeDirectoryException {
+public class QueryResultNotUniqueException extends AppRuntimeException {
     public QueryResultNotUniqueException(String message) {
         super(message);
     }

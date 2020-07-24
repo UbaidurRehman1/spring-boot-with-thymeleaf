@@ -13,24 +13,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping
 public class HomeController {
 
-    private final static String RETURN_INDEX = "index";
-    private final static String END_POINT_INDEX = "/";
-    private final static String END_POINT_LOGIN = "/login";
+    private final static String INDEX_VIEW_FRAGMENT = "index";
+
+    private final static String INDEX_PARAMETER = "/";
+    private final static String LOGIN_PARAMETER = "/login";
 
     /**
      * @return login view
      */
-    @GetMapping(END_POINT_LOGIN)
+    @GetMapping(LOGIN_PARAMETER)
     public String login() {
-        return RETURN_INDEX;
+        return INDEX_VIEW_FRAGMENT;
     }
 
     /**
      * @return login view
      */
-    @GetMapping(END_POINT_INDEX)
+    @GetMapping(INDEX_PARAMETER)
     public String indexPage() {
-        return RETURN_INDEX;
+        return INDEX_VIEW_FRAGMENT;
     }
 
 }

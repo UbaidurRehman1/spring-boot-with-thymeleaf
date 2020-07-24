@@ -1,5 +1,6 @@
 package com.ts.employeeDirectory.entity;
 
+import com.ts.employeeDirectory.enumeration.EmployeeRole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
