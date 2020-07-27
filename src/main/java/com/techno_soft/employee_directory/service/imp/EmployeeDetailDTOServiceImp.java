@@ -12,9 +12,7 @@ import com.techno_soft.employee_directory.service.DepartmentService;
 import com.techno_soft.employee_directory.service.EmployeeDetailDTOService;
 import com.techno_soft.employee_directory.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

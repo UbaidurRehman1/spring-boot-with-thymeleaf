@@ -1,4 +1,4 @@
-package com.techno_soft.employee_directory.security;
+package com.techno_soft.employee_directory.config;
 
 import com.techno_soft.employee_directory.enumeration.EmployeeRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -35,13 +36,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     private final UserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 
     @Autowired
-    public WebSecurityConfig(@Qualifier("userDetailServiceImp") UserDetailsService userDetailsService,
-                             PasswordEncoder passwordEncoder) {
+    public WebSecurityConfig(@Qualifier("userDetailServiceImp") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -53,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
