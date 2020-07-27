@@ -47,7 +47,8 @@ public class Employee {
 
     private String cellPhone;
 
-    private Boolean manOfMonth;
+    @Column(unique = true)
+    private Boolean manOfMonth = null;
 
     private String picture;
 
@@ -95,7 +96,11 @@ public class Employee {
         setPhoneNumber(employeeUpdateDtO.getWorkPhone());
         setHomePhone(employeeUpdateDtO.getHomePhone());
         setCellPhone(employeeUpdateDtO.getCellPhone());
-        setManOfMonth(employeeUpdateDtO.getIsManOfMonth());
+        if (!employeeUpdateDtO.getIsManOfMonth()) {
+            setManOfMonth(null);
+        } else {
+            setManOfMonth(true);
+        }
         setPicture(employeeUpdateDtO.getPicture());
         return this;
     }

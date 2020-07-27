@@ -12,7 +12,9 @@ import com.techno_soft.employee_directory.service.DepartmentService;
 import com.techno_soft.employee_directory.service.EmployeeDetailDTOService;
 import com.techno_soft.employee_directory.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -74,13 +76,13 @@ public class EmployeeDetailDTOServiceImp implements EmployeeDetailDTOService {
                 setCurrentManOfMonthFalse();
             }
             Employee employee = getEmployee(employeeDetailDTO);
-            employeeRepo.save(employee).getEmployeeDTO();
+            employeeRepo.save(employee);
             if (isRequestForUpdateEmployee(employeeDetailDTO)) {
                 log.info("Employee Updated");
             } else {
                 log.info("Employee Created");
             }
-        } catch (Exception exp) {
+        } catch(Exception exp) {
             throw new RuntimeException(exp.getMessage());
         }
     }
@@ -108,7 +110,7 @@ public class EmployeeDetailDTOServiceImp implements EmployeeDetailDTOService {
     private void setCurrentManOfMonthFalse() {
         try {
             Employee employee = employeeRepo.findByManOfMonthTrue().orElseThrow(() -> {throw new ManOfMonthNotFoundException("Man of Month Not found");});
-            employee.setManOfMonth(false);
+            employee.setManOfMonth(null);
             employeeRepo.save(employee);
         } catch(ManOfMonthNotFoundException ignore) {
 
