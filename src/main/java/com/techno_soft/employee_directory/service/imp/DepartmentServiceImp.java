@@ -34,7 +34,7 @@ public class DepartmentServiceImp implements DepartmentService {
         Department department = departmentRepo.findById(id).orElseThrow(() -> {
             throw new DepartmentNotFoundException("The Requested Department is not found");
         });
-        log.info("Department Found: {}", department);
+        log.info("Department Found: [id={}]", department.getId());
         return department;
     }
 
@@ -43,7 +43,7 @@ public class DepartmentServiceImp implements DepartmentService {
     public List<DepartmentDTO> getAll() {
         log.info("Finding all departments");
         List<DepartmentDTO> departmentDTOS = departmentRepo.findAll().stream().map(Department::getDepartment).collect(Collectors.toList());
-        log.info("Found {} departments: {}", departmentDTOS.size(), departmentDTOS);
+        log.info("Found {} departments", departmentDTOS.size());
         return departmentDTOS;
     }
 
@@ -51,16 +51,16 @@ public class DepartmentServiceImp implements DepartmentService {
     public void save(DepartmentDTO departmentDTO) {
         Long id = departmentDTO.getId();
         if (id != null) {
-            log.info("Updating Department: {}", departmentDTO);
+            log.info("Updating Department: [id = {}]", departmentDTO.getId());
         } else {
-            log.info("Creating Department: {}", departmentDTO);
+            log.info("Creating Department");
         }
         Department department = new Department();
         department.setName(departmentDTO.getName());
         department.setId(departmentDTO.getId());
         try {
             departmentRepo.save(department).getDepartment();
-            log.info("Department Saved");
+            log.info("Department Saved: [id = {}]", department.getId());
         } catch (Exception exp) {
             throw new RuntimeException(exp.getMessage());
         }
@@ -69,10 +69,10 @@ public class DepartmentServiceImp implements DepartmentService {
     @Override
     public void delete(Long id) {
         Department department = departmentRepo.getOne(id);
-        log.info("Deleting Department: {}", department);
+        log.info("Deleting Department: [id={}]", department.getId());
         try {
             departmentRepo.delete(department);
-            log.info("Deleted");
+            log.info("Department Deleted: [id={}]", department.getId());
         } catch (DataIntegrityViolationException exp) {
             SQLException sqlException = getSQLException(exp);
             if (isForeignKeyConstraintViolation(sqlException)) {

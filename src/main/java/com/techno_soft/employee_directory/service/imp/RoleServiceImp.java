@@ -26,7 +26,7 @@ public class RoleServiceImp implements RoleService {
     public List<Role> getAll() {
         log.info("Getting All Roles of a User");
         List<Role> roles = roleRepo.findAll();
-        log.info("Roles Found: {}", roles);
+        log.info("{} roles Found", roles.size());
         return roles;
     }
 
@@ -36,7 +36,7 @@ public class RoleServiceImp implements RoleService {
         Role role = roleRepo.findByRole(employeeRole).orElseThrow(() -> {
             throw new RoleNotFoundException("The Requested Role is not found");
         });
-        log.info("Role Entity Found: {}", role);
+        log.info("Role Entity Found: [id={}]", role.getId());
         return role;
     }
 }

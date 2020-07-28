@@ -37,17 +37,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-
     @Autowired
     public WebSecurityConfig(@Qualifier("userDetailServiceImp") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     @Override

@@ -7,10 +7,10 @@ import com.techno_soft.employee_directory.entity.Employee;
 import com.techno_soft.employee_directory.entity.Role;
 import com.techno_soft.employee_directory.exception.ManOfMonthNotFoundException;
 import com.techno_soft.employee_directory.exception.QueryResultNotUniqueException;
-import com.techno_soft.employee_directory.security.UserDetailsImp;
 import com.techno_soft.employee_directory.exception.SelfDeleteException;
 import com.techno_soft.employee_directory.exception.UserNotFoundException;
 import com.techno_soft.employee_directory.repo.EmployeeRepo;
+import com.techno_soft.employee_directory.security.UserDetailsImp;
 import com.techno_soft.employee_directory.service.DepartmentService;
 import com.techno_soft.employee_directory.service.EmployeeService;
 import com.techno_soft.employee_directory.service.RoleService;
@@ -70,7 +70,7 @@ public class EmployeeServiceImp implements EmployeeService {
         Employee employee = employeeRepo.findByLogin(login).orElseThrow(() -> {
             throw new UserNotFoundException("The Requested User not found");
         });
-        log.info("Employee Found: {}", employee);
+        log.info("Employee Found: [id={}]", employee.getId());
         return employee;
     }
 
@@ -87,7 +87,7 @@ public class EmployeeServiceImp implements EmployeeService {
         List<Employee> employees = employeeRepo.findAll();
         List<EmployeeDTO> employeeDTOS = employees.stream().map(Employee::getEmployeeDTO)
                 .collect(Collectors.toList());
-        log.info("Found {} Employees: {}", employeeDTOS.size(), employeeDTOS);
+        log.info("Found {} Employees", employeeDTOS.size());
         return employeeDTOS;
     }
 
@@ -98,7 +98,7 @@ public class EmployeeServiceImp implements EmployeeService {
             EmployeeDetailDTO employeeDetailDTO = employeeRepo.findByManOfMonthTrue().orElseThrow(() -> {
                 throw new ManOfMonthNotFoundException("Man of Month Not Found");
             }).getEmployeeDetailDTO();
-            log.info("Found Man of the Month: {}", employeeDetailDTO);
+            log.info("Found Man of the Month: [id={}]", employeeDetailDTO.getId());
             return employeeDetailDTO;
         } catch (ManOfMonthNotFoundException manOfTheMonthEmployee) {
             throw manOfTheMonthEmployee;
@@ -109,11 +109,11 @@ public class EmployeeServiceImp implements EmployeeService {
 
     @Override
     public EmployeeDetailDTO get(Long id) {
-        log.info("Finding Employee Details of id {}", id);
+        log.info("Finding Employee Details [id={}]", id);
         EmployeeDetailDTO employeeDetailDTO = employeeRepo.findById(id).orElseThrow(() -> {
             throw new UserNotFoundException("The request user not found");
         }).getEmployeeDetailDTO();
-        log.info("Employee Detail Found: {}", employeeDetailDTO);
+        log.info("Employee Detail Found: [id={}]", employeeDetailDTO.getId());
         return employeeDetailDTO;
     }
 
@@ -121,9 +121,9 @@ public class EmployeeServiceImp implements EmployeeService {
     public void save(EmployeeDetailDTO employeeDetailDTO) {
         try {
             if (employeeDetailDTO.getId() != null) {
-                log.info("Updating Employee: [{}]", employeeDetailDTO);
+                log.info("Updating Employee: [id={}]", employeeDetailDTO.getId());
             } else {
-                log.info("Creating New Employee: [{}]", employeeDetailDTO);
+                log.info("Creating New Employee");
             }
             if (employeeDetailDTO.getIsManOfMonth()) {
                 setCurrentManOfMonthFalse();
@@ -135,7 +135,7 @@ public class EmployeeServiceImp implements EmployeeService {
             } else {
                 log.info("Employee Created [id={}]", employee.getId());
             }
-        } catch(Exception exp) {
+        } catch (Exception exp) {
             throw new RuntimeException(exp.getMessage());
         }
     }
@@ -153,10 +153,12 @@ public class EmployeeServiceImp implements EmployeeService {
 
     private void setCurrentManOfMonthFalse() {
         try {
-            Employee employee = employeeRepo.findByManOfMonthTrue().orElseThrow(() -> {throw new ManOfMonthNotFoundException("Man of Month Not found");});
+            Employee employee = employeeRepo.findByManOfMonthTrue().orElseThrow(() -> {
+                throw new ManOfMonthNotFoundException("Man of Month Not found");
+            });
             employee.setManOfMonth(null);
             employeeRepo.save(employee);
-        } catch(ManOfMonthNotFoundException ignore) {
+        } catch (ManOfMonthNotFoundException ignore) {
 
         }
     }
