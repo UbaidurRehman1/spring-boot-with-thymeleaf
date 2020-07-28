@@ -120,20 +120,20 @@ public class EmployeeServiceImp implements EmployeeService {
     @Override
     public void save(EmployeeDetailDTO employeeDetailDTO) {
         try {
-            if (isRequestForUpdateEmployee(employeeDetailDTO)) {
-                log.info("Updating Employee: {}", employeeDetailDTO);
+            if (employeeDetailDTO.getId() != null) {
+                log.info("Updating Employee: [{}]", employeeDetailDTO);
             } else {
-                log.info("Creating New Employee: {}", employeeDetailDTO);
+                log.info("Creating New Employee: [{}]", employeeDetailDTO);
             }
-            if (isRequestForMakeEmployeeManOfMonth(employeeDetailDTO)) {
+            if (employeeDetailDTO.getIsManOfMonth()) {
                 setCurrentManOfMonthFalse();
             }
             Employee employee = getEmployee(employeeDetailDTO);
             employeeRepo.save(employee);
-            if (isRequestForUpdateEmployee(employeeDetailDTO)) {
-                log.info("Employee Updated");
+            if (employeeDetailDTO.getId() != null) {
+                log.info("Employee Updated [id={}]", employee.getId());
             } else {
-                log.info("Employee Created");
+                log.info("Employee Created [id={}]", employee.getId());
             }
         } catch(Exception exp) {
             throw new RuntimeException(exp.getMessage());
@@ -151,15 +151,6 @@ public class EmployeeServiceImp implements EmployeeService {
         return employee;
     }
 
-
-    private boolean isRequestForUpdateEmployee(EmployeeDetailDTO employeeUpdateDtO) {
-        return employeeUpdateDtO.getId() != null;
-    }
-
-    private boolean isRequestForMakeEmployeeManOfMonth(EmployeeDetailDTO employeeUpdateDtO) {
-        return employeeUpdateDtO.getIsManOfMonth();
-    }
-
     private void setCurrentManOfMonthFalse() {
         try {
             Employee employee = employeeRepo.findByManOfMonthTrue().orElseThrow(() -> {throw new ManOfMonthNotFoundException("Man of Month Not found");});
@@ -169,6 +160,4 @@ public class EmployeeServiceImp implements EmployeeService {
 
         }
     }
-
-
 }
