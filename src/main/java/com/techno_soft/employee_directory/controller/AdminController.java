@@ -48,20 +48,14 @@ public class AdminController {
 
     private final DepartmentService departmentService;
     private final EmployeeService employeeService;
-    private final EmployeeDTOService employeeDTOService;
-    private final EmployeeDetailDTOService employeeDetailDTOService;
     private final RoleService roleService;
 
     @Autowired
     public AdminController(DepartmentService departmentService,
                            EmployeeService employeeService,
-                           EmployeeDTOService employeeDTOService,
-                           EmployeeDetailDTOService employeeDetailDTOService,
                            RoleService roleService) {
         this.departmentService = departmentService;
         this.employeeService = employeeService;
-        this.employeeDTOService = employeeDTOService;
-        this.employeeDetailDTOService = employeeDetailDTOService;
         this.roleService = roleService;
     }
 
@@ -90,7 +84,7 @@ public class AdminController {
      */
     @GetMapping(EMPLOYEE_DIRECTORY_PARAMETER)
     public String members(Model model) {
-        List<EmployeeDTO> employeeDTOS = employeeDTOService.geAll();
+        List<EmployeeDTO> employeeDTOS = employeeService.geAll();
         model.addAttribute(EMPLOYEES_ATTRIBUTE, employeeDTOS);
         return EMPLOYEE_DIRECTORY_VIEW_FRAGMENT;
     }
@@ -102,7 +96,7 @@ public class AdminController {
      */
     @GetMapping(EMPLOYEE_ID_PARAMETER)
     public String getMemberDetail(@PathVariable Long id, Model model) {
-        EmployeeDetailDTO employeeDetailDTO = employeeDetailDTOService.get(id);
+        EmployeeDetailDTO employeeDetailDTO = employeeService.get(id);
         List<DepartmentDTO> departmentDTOS = departmentService.getAll();
         List<Role> roles = roleService.getAll();
         model.addAttribute(IS_UPDATE_ATTRIBUTE, true);
@@ -136,7 +130,7 @@ public class AdminController {
      */
     @PostMapping(SAVE_EMPLOYEE_PARAMETER)
     public String save(@ModelAttribute EmployeeDetailDTO employeeDetailDTO) {
-        employeeDetailDTOService.save(employeeDetailDTO);
+        employeeService.save(employeeDetailDTO);
         return EMPLOYEE_DIRECTORY_REDIRECT;
     }
 

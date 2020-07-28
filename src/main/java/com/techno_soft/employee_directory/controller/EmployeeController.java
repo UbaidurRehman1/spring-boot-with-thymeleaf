@@ -4,8 +4,7 @@ import com.techno_soft.employee_directory.dto.DepartmentDTO;
 import com.techno_soft.employee_directory.dto.EmployeeDTO;
 import com.techno_soft.employee_directory.dto.EmployeeDetailDTO;
 import com.techno_soft.employee_directory.service.DepartmentService;
-import com.techno_soft.employee_directory.service.EmployeeDTOService;
-import com.techno_soft.employee_directory.service.EmployeeDetailDTOService;
+import com.techno_soft.employee_directory.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,16 +36,13 @@ public class EmployeeController {
     private final static String DEPARTMENTS_ATTRIBUTE = "departments";
 
     private final DepartmentService departmentService;
-    private final EmployeeDetailDTOService employeeDetailDTOService;
-    private final EmployeeDTOService employeeDTOService;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public EmployeeController(EmployeeDetailDTOService employeeDetailDTOService,
-                              DepartmentService departmentService,
-                              EmployeeDTOService employeeDTOService) {
+    public EmployeeController(EmployeeService employeeService,
+                              DepartmentService departmentService) {
         this.departmentService = departmentService;
-        this.employeeDetailDTOService = employeeDetailDTOService;
-        this.employeeDTOService = employeeDTOService;
+        this.employeeService = employeeService;
     }
 
     /**
@@ -55,9 +51,9 @@ public class EmployeeController {
      */
     @RequestMapping
     public String getEmployeeDirectory(Model model) {
-        List<EmployeeDTO> employeeDTOS = employeeDTOService.geAll();
+        List<EmployeeDTO> employeeDTOS = employeeService.geAll();
         List<DepartmentDTO> departmentDTOS = departmentService.getAll();
-        model.addAttribute(MAN_OF_MONTH_ATTRIBUTE, employeeDetailDTOService.getManOfTheMonthEmployee());
+        model.addAttribute(MAN_OF_MONTH_ATTRIBUTE, employeeService.getManOfTheMonthEmployee());
         model.addAttribute(EMPLOYEES_ATTRIBUTE, employeeDTOS);
         model.addAttribute(DEPARTMENTS_ATTRIBUTE, departmentDTOS);
         return EMPLOYEES_DIRECTORY_VIEW_FRAGMENT;
@@ -70,7 +66,7 @@ public class EmployeeController {
      */
     @GetMapping(ID_PARAMETER)
     public String getEmployeeDetail(@PathVariable Long id, Model model) {
-        EmployeeDetailDTO employeeDetailDTO = employeeDetailDTOService.get(id);
+        EmployeeDetailDTO employeeDetailDTO = employeeService.get(id);
         model.addAttribute(EMPLOYEE_ATTRIBUTE, employeeDetailDTO);
         return EMPLOYEE_DETAIL_VIEW_FRAGMENT;
     }
