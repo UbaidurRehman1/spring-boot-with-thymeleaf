@@ -43,23 +43,24 @@ public class EmployeeServiceImp implements EmployeeService {
 
     @Override
     public void delete(Long id) {
-        log.info("Deleting Employee of id {}", id);
+        log.info("Deleting Employee [id={}]", id);
         try {
             Employee employee = employeeRepo.findById(id).orElseThrow(() -> {
                 throw new UserNotFoundException("Request User is not found");
             });
-            isCurrentLoggedInUserTryingToDeleteItSelf(employee);
-            employeeRepo.delete(employee);
-            log.info("Deleted");
+            if (isLoggedIn(employee)) {
+                throw new SelfDeleteException("The user is not privileged to perform this action");
+            } else {
+                employeeRepo.delete(employee);
+                log.info("Deleted Employee [id={}]", employee.getId());
+            }
         } catch (Exception exp) {
             throw new RuntimeException(exp.getMessage());
         }
     }
 
-    private void isCurrentLoggedInUserTryingToDeleteItSelf(Employee employee) {
-        if (employee.getId().equals(getCurrentLoggedInEmployee().getId())) {
-            throw new SelfDeleteException("The Admin cannot delete itself");
-        }
+    private boolean isLoggedIn(Employee employee) {
+        return employee.getId().equals(getCurrentLoggedInEmployee().getId());
     }
 
 
